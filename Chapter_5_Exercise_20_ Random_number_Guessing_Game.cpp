@@ -21,6 +21,7 @@ using namespace std;
 bool Get_Repeat_Info();
 int GetRandomNumber();
 void Question_Answer_Validation(int Number);
+int Switch_Case_Menu();
 
 
 int main()
@@ -30,6 +31,8 @@ int main()
 
     do {
 
+        Switch_Case_Menu();
+        
         int Number = GetRandomNumber();
 
         Question_Answer_Validation(Number);
@@ -87,4 +90,48 @@ void Question_Answer_Validation(int Number) {
 
     }
     cout << "Correct!" << endl;
+}
+
+int Switch_Case_Menu() {
+    int Menu_Choice = 1;
+
+    cout << "Select your option on the menu: ";
+    cin >> Menu_Choice;
+
+    switch (Menu_Choice) {
+    case 1:
+        cout << "You chose option 1\n";
+        break;
+
+    case 2: 
+        cout << "You chose option 2\n";
+        break;
+
+    case 3:
+        cout << "You chose option 3\n";
+        break;
+
+    default:
+        cout << "Thank you for using the program!";
+        return 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
 }

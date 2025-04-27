@@ -7,6 +7,14 @@ Requirements:
 -if users guess is too hiht the program should respond with too high
 -same for if the guess is too low
 -Program should use a loop that repeats until the correct guess is answered.
+The program should display a menu something like this:
+1. Display Existing Sessions.
+2. Play a New Session.
+3. Delete previous sessions.
+4. Exit the program.
+After the program displays the menu, if the user wants to have another session, a game should start
+by getting the player's name and proceed to play the guessing game. Once the game is completed save the name and score in the file.
+Once finished the program the menu should be redisplayed
 */
 
 #include <iostream>
@@ -27,7 +35,7 @@ void Delete_Sessions();
 void Show_Menu();
 
 
-
+//Uses while loop to handle whether program will run, if bool User_Repeat is false it will run and use switch-case files to manage menu selection.
 int main()
 {
     int Menu_Choice;
@@ -88,6 +96,8 @@ int main()
     }
 }
 
+
+//Simply displays menu
 void Show_Menu() {
     cout << "\n--- MAIN MENU ---" << endl;
     cout << "1. Display Existing Sessions" << endl;
@@ -105,7 +115,7 @@ bool Get_Repeat_Info() {
     return (choice == 'Y' || choice == 'y');
 }
 
-//
+//Creates a random number within the range of 0 - 1000, returns number to Question_Answer_Validation function
 int GetRandomNumber() {
     random_device x;
     uniform_int_distribution<int> randomInt(0, 1000);
@@ -117,6 +127,7 @@ int GetRandomNumber() {
     return Number;
 }
 
+//Checks whether user answer is correct, incremenets attempts to answer with every entry. Attempts return to case 2 in main function.
 int Question_Answer_Validation(int Number) {
     int User_Guess;
     int Attempts = 0;
@@ -145,6 +156,7 @@ int Question_Answer_Validation(int Number) {
     return Attempts;
 }
 
+//Writes to "sessions.txt" from getline from case 2 in int main. Also has a failsafe if no previous sessions are recorded
 void Display_Sessions() {
     ifstream inFile("sessions.txt");
 
@@ -162,7 +174,7 @@ void Display_Sessions() {
     inFile.close();
 }
 
-// Clear all session records
+//Deletes all previous sessions
 void Delete_Sessions() {
     ofstream outFile("sessions.txt", ios::trunc);
     if (outFile.is_open()) {

@@ -21,7 +21,7 @@ using namespace std;
 bool Get_Repeat_Info();
 int GetRandomNumber();
 void Question_Answer_Validation(int Number);
-int Switch_Case_Menu();
+
 
 
 int main()
@@ -31,7 +31,7 @@ int main()
 
     do {
 
-        Switch_Case_Menu();
+        
         
         int Number = GetRandomNumber();
 
@@ -57,7 +57,7 @@ bool Get_Repeat_Info() {
     return (choice == 'Y' || choice == 'y');
 }
 
-//
+//Creates random number from 0 - 1000
 int GetRandomNumber() {
     random_device x;
     uniform_int_distribution<int> randomInt(0, 1000);
@@ -69,6 +69,7 @@ int GetRandomNumber() {
     return Number;
 }
 
+//Uses while loop to loop if incoreect and to terminate if the guess is correct
 void Question_Answer_Validation(int Number) {
     int User_Guess;
     
@@ -92,46 +93,6 @@ void Question_Answer_Validation(int Number) {
     cout << "Correct!" << endl;
 }
 
-int Switch_Case_Menu() {
-    int Menu_Choice = 1;
-
-    cout << "Select your option on the menu: ";
-    cin >> Menu_Choice;
-
-    switch (Menu_Choice) {
-    case 1:
-        cout << "You chose option 1\n";
-        break;
-
-    case 2: 
-        cout << "You chose option 2\n";
-        break;
-
-    case 3:
-        cout << "You chose option 3\n";
-        break;
-
-    default:
-        cout << "Thank you for using the program!";
-        return 0;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-}

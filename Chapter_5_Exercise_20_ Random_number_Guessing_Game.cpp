@@ -14,39 +14,87 @@ Requirements:
 #include <cstdlib>
 #include <ctime>
 #include <random>
+#include <string>
 
 using namespace std;
 
 //Function Prototypes
 bool Get_Repeat_Info();
 int GetRandomNumber();
-void Question_Answer_Validation(int Number);
-int Switch_Case_Menu();
+int Question_Answer_Validation(int Number);
+void Display_Sessions();
+void Delete_Sessions();
+void Show_Menu();
+
 
 
 int main()
 {
-   
-    bool User_Repeat;
+    int Menu_Choice;
 
-    do {
+    bool User_Repeat = false;
 
-        Switch_Case_Menu();
-        
-        int Number = GetRandomNumber();
+    while (!User_Repeat) {
 
-        Question_Answer_Validation(Number);
+        Show_Menu();
+        cin >> Menu_Choice;
+        cin.ignore();
 
-        User_Repeat = Get_Repeat_Info();
-    
+        switch (Menu_Choice) {
+        case 1: {
+            Display_Sessions();
+            break;
+        }
 
-    }    
+        case 2: {
+            string Player_Name;
+            cout << "Enter your name: ";
+            getline(cin, Player_Name);
 
-    while (User_Repeat); {
-        cout << "Thank you for using the program";
-        return 0;
+            int Number = GetRandomNumber();
+            int Attempts = Question_Answer_Validation(Number);
+
+            ofstream outFile("sessions.txt", ios::app);
+            if (outFile.is_open()) {
+                outFile << Player_Name << " guessed correctly in " << Attempts << " attempts." << endl;
+                outFile.close();
+                cout << "Session saved!\n";
+            }
+            else {
+                cout << "Error: Could not save session.\n";
+            }
+            break;
+        }
+        case 3: {
+            Delete_Sessions();
+            break;
+        }
+        case 4: {
+            User_Repeat = true;
+            cout << "Thank you for using the program." << endl;
+            break;
+        }
+
+        default: {
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
+        }
+
+
+
+
+
     }
+}
 
+void Show_Menu() {
+    cout << "\n--- MAIN MENU ---" << endl;
+    cout << "1. Display Existing Sessions" << endl;
+    cout << "2. Play a New Session" << endl;
+    cout << "3. Delete Previous Sessions" << endl;
+    cout << "4. Exit the Program" << endl;
+    cout << "Enter your choice: ";
 }
 
 //Allows user to choose whether they want to repeat program or end it
@@ -69,9 +117,10 @@ int GetRandomNumber() {
     return Number;
 }
 
-void Question_Answer_Validation(int Number) {
+int Question_Answer_Validation(int Number) {
     int User_Guess;
-    
+    int Attempts = 0;
+
     cout << "Guess the number: ";
     
     cin >> User_Guess;
@@ -86,52 +135,41 @@ void Question_Answer_Validation(int Number) {
         
         cin >> User_Guess;
         
+        Attempts++;
+
         cout << endl;
 
     }
     cout << "Correct!" << endl;
+
+    return Attempts;
 }
 
-int Switch_Case_Menu() {
-    int Menu_Choice = 1;
+void Display_Sessions() {
+    ifstream inFile("sessions.txt");
 
-    cout << "Select your option on the menu: ";
-    cin >> Menu_Choice;
-
-    switch (Menu_Choice) {
-    case 1:
-        cout << "You chose option 1\n";
-        break;
-
-    case 2: 
-        cout << "You chose option 2\n";
-        break;
-
-    case 3:
-        cout << "You chose option 3\n";
-        break;
-
-    default:
-        cout << "Thank you for using the program!";
-        return 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if (!inFile) {
+        cout << "No sessions found.\n";
+        return;
     }
 
+    string line;
+    cout << "\n--- Previous Sessions ---" << endl;
+    while (getline(inFile, line)) {
+        cout << line << endl;
+    }
 
+    inFile.close();
+}
 
-
+// Clear all session records
+void Delete_Sessions() {
+    ofstream outFile("sessions.txt", ios::trunc);
+    if (outFile.is_open()) {
+        outFile.close();
+        cout << "All sessions have been deleted.\n";
+    }
+    else {
+        cout << "Error: Could not delete sessions.\n";
+    }
 }

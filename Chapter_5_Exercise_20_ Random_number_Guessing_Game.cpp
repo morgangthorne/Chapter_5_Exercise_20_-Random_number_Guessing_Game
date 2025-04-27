@@ -57,7 +57,10 @@ int main()
         case 2: {
             string Player_Name;
             cout << "Enter your name: ";
+            
             getline(cin, Player_Name);
+
+            cout << "---------------------------\n";
 
             int Number = GetRandomNumber();
             int Attempts = Question_Answer_Validation(Number);
@@ -99,11 +102,12 @@ int main()
 
 //Simply displays menu
 void Show_Menu() {
-    cout << "\n--- MAIN MENU ---" << endl;
+    cout << "\n-------- MAIN MENU --------" << endl;
     cout << "1. Display Existing Sessions" << endl;
     cout << "2. Play a New Session" << endl;
     cout << "3. Delete Previous Sessions" << endl;
     cout << "4. Exit the Program" << endl;
+    cout << "---------------------------" << endl;
     cout << "Enter your choice: ";
 }
 
@@ -152,6 +156,7 @@ int Question_Answer_Validation(int Number) {
 
     }
     cout << "Correct!" << endl;
+    cout << "It took you " << Attempts << " attempts!" << endl;
 
     return Attempts;
 }
